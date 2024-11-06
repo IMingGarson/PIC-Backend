@@ -6,17 +6,23 @@ from flask_cors import CORS
 from datetime import datetime
 from flask import Flask, request, jsonify
 from os.path import join, dirname
-from os import environ
 from dotenv import load_dotenv
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 CORS(app, resources={
     r"/analyze": {"origins": "http://localhost:3000"}
 })
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+limiter = Limiter(
+    get_remote_address,
+    app=app
+)
 
 def load_json_data(file_path):
     try:
@@ -136,7 +142,13 @@ def select_top_two_products(products_analysis):
     )
     return sorted_products[:2]
 
+@app.route("/slow")
+@limiter.limit("5 per minute")
+def slow():
+    return "5 per minute!"
+
 @app.route('/analyze', methods=['POST'])
+@limiter.limit("10 per hour")
 def analyze():
     data = request.get_json()
 
