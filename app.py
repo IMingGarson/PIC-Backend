@@ -190,7 +190,7 @@ def analyze():
         "analysis_id": str(uuid.uuid4()),
         "patent_id": patent_id,
         "company_name": company.get('name', ''),
-        "analysis_date": datetime.utcnow().strftime("%Y-%m-%d"),
+        "analysis_date": datetime.today().strftime('%Y-%m-%d'),
         "top_infringing_products": top_two,
         "overall_risk_assessment": overall_risk
     }
