@@ -13,11 +13,12 @@ COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN mkdir -p files
+
 COPY app.py .
-COPY patents.json .
-COPY company_products.json .
+COPY ./files/patents.json ./files
+COPY ./files/company_products.json ./files
 
 EXPOSE 5000
 
-
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:5000", "--workers", "1"]
+CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:5000", "--workers", "1", "--timeout", "300"]
