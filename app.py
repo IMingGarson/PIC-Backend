@@ -16,7 +16,7 @@ load_dotenv(dotenv_path)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 CORS(app, resources={
-    r"/analyze": {"origins": "http://localhost:3000"}
+    r"/analyze": {"origins": ["http://localhost:3000", "https://patent-infringement-checker.netlify.app"]}
 })
 
 limiter = Limiter(
@@ -35,8 +35,8 @@ def load_json_data(file_path):
         app.logger.error(f"Invalid JSON format in file: {file_path}")
         return {}
 
-patents_data = load_json_data('patents.json')
-company_products_data = load_json_data('company_products.json')
+patents_data = load_json_data('./files/patents.json')
+company_products_data = load_json_data('./files/company_products.json')
 
 def find_patent(patent_id):
     for patent in patents_data:
