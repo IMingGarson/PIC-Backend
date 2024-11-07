@@ -18,7 +18,7 @@ load_dotenv(dotenv_path)
 is_dev = os.getenv("DEVELOPMENT") == '1'
 
 CORS(app, resources={
-    r"/analyze": {"origins": ["http://localhost:3000", "https://patent-infringement-checker.netlify.app"]}
+    r"/analyze": {"origins": "*"}
 })
 
 limiter = Limiter(
