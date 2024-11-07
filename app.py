@@ -78,6 +78,10 @@ def assess_infringement_likelihood(relevant_claims):
     else:
         return "Low"
 
+@app.route('/ping', methods=['GET'])
+def index():
+    return "pong", 200
+
 @app.route('/analyze', methods=['POST'])
 @limiter.limit("10 per hour")
 def analyze():

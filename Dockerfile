@@ -18,6 +18,7 @@ RUN mkdir -p files
 COPY app.py .
 COPY ./files/patents.json ./files
 COPY ./files/company_products.json ./files
+COPY ./utils ./utils
 
 EXPOSE 5000
 
