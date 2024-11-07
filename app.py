@@ -18,7 +18,7 @@ load_dotenv(dotenv_path)
 is_dev = os.getenv("DEVELOPMENT") == '1'
 
 CORS(app, resources={
-    r"/analyze": {"origins": "http://localhost:5000"}
+    r"/analyze": {"origins": ["http://localhost:5000", "http://54.205.200.84:5000"]}
 })
 
 limiter = Limiter(
